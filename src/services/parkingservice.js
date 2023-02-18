@@ -1,36 +1,36 @@
 import axios from "axios";
 
  export function addParkingLot(body) {
-    let url = 'http://localhost:3000/parking/addParkingLot';
+    let url = 'https://parkingmanagementservice.onrender.com/parking/addParkingLot';
     return axios.post(url, body);
   }
 
   export function addFloor(body) {
-    let url = 'http://localhost:3000/parking/addFloorDetails';
+    let url = 'https://parkingmanagementservice.onrender.com/parking/addFloorDetails';
     return axios.post(url, body);
   }
 
   export function addParkingSpot(body) {
-    let url = 'http://localhost:3000/parking/addSpot';
+    let url = 'https://parkingmanagementservice.onrender.com/parking/addSpot';
     return axios.post(url, body);
   }
 
   export function bookSpot(body) {
-    let url = 'http://localhost:3000/booking/addBooking';
+    let url = 'https://parkingmanagementservice.onrender.com/booking/addBooking';
     return axios.post(url, body);
   }
 
   export function releaseSpot(body){
-    let url = 'http://localhost:3000/booking/releaseBooking';
+    let url = 'https://parkingmanagementservice.onrender.com/booking/releaseBooking';
     return axios.post(url, body);
   }
 
   export function dashboard() {
-    let url = 'http://localhost:3000/common/dashboard';
+    let url = 'https://parkingmanagementservice.onrender.com/common/dashboard';
     return axios.get(url);
   }
 
   export function parkingManagement(){
-    let url = 'http://localhost:3000/common/parkingManagementDetails';
+    let url = 'https://parkingmanagementservice.onrender.com/common/parkingManagementDetails';
     return axios.get(url);
   }
