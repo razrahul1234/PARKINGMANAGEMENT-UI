@@ -1,5 +1,6 @@
 import React from "react";
-import { bookSpot } from "../services/parkingservice";
+import Select from 'react-select'
+import { bookSpot, parkingManagement } from "../services/parkingservice";
 
 export default class BookSpot extends React.Component {
     constructor() {
@@ -8,7 +9,9 @@ export default class BookSpot extends React.Component {
             alertMessage: '',
             size_of_slots: '',
             data: [],
-            showTicket: ''
+            showTicket: '',
+            parking_lot_id:'',
+            parkingLotOptions: []
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.ticketTemplate = this.ticketTemplate.bind(this);
@@ -17,7 +20,8 @@ export default class BookSpot extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         let body = {
-            "size_of_slots": this.state.size_of_slots
+            "size_of_slots": this.state.size_of_slots,
+            "parking_lot_id": this.state.parking_lot_id
         };
         bookSpot(body).then((response) => {
             console.log(response);
@@ -57,6 +61,21 @@ export default class BookSpot extends React.Component {
 
 
     }
+    
+    componentDidMount(){
+        parkingManagement().then(res => {
+            console.log(res);
+            let tempoptions = [];
+            res.data.parkingLotData.map(item => {
+                tempoptions.push({value: item.parking_lot_id, label:item.parking_lot_name});
+            })
+            
+            this.setState({
+                parkingLotOptions: tempoptions
+            })
+            
+        })
+      }
 
     render() {
         return <form onSubmit={this.handleSubmit}>
@@ -65,6 +84,11 @@ export default class BookSpot extends React.Component {
                     <span aria-hidden="true">&times;</span>
                 </button></div> : ''}
             <h3> Book Spot </h3>
+            <div className="form-group mb-4 w-50 m-auto pb-4">
+              <div className="float-left" for="parking_lot_id">Parking Lot</div><br />
+              <Select isClearable="true" isSearchable='true' options={this.state.parkingLotOptions} onChange={(e) => this.setState({parking_lot_id : e.value}) } />
+          </div>
+          <br /><br />
             <div className="form-group w-50 m-auto">
                 <label className="float-left" for="size_of_slots">Size Of Slots</label>
                 <input
@@ -72,26 +96,15 @@ export default class BookSpot extends React.Component {
                     value={this.state.size_of_slots}
                     onChange={(e) => this.setState({ size_of_slots: e.target.value })}
                     className="form-control" id="size_of_slots" placeholder="Ex.small,medium,large,x-large" />
-                <p className="float-left text-muted">Vehicle will be scanned automatically.</p>
             </div>
-            {/* <button type="button" className="btn btn-success">Success</button> */}
+            <p className="text-muted">Vehicle will be scanned automatically.</p>
+           
             <br /><br /><br />
             <input className="btn btn-success" type="submit" disabled={!this.state.size_of_slots} />
 
             <br /><br /><br />
 
             {this.state.showTicket}
-
-            {/* <div className="form-group">
-         <label for="exampleFormControlSelect2">Example multiple select</label>
-         <select multiple className="form-control" id="exampleFormControlSelect2">
-           <option>1</option>
-           <option>2</option>
-           <option>3</option>
-           <option>4</option>
-           <option>5</option>
-         </select>
-       </div> */}
         </form>
     }
 

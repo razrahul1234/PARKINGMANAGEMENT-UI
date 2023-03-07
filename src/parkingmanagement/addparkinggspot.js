@@ -43,7 +43,7 @@ export default class AddParkingSpot extends React.Component {
             console.log(res);
             let tempoptions = [];
             res.data.parkingLotData.map(item => {
-                tempoptions.push({value: item.parking_lot_id, label:`Parking - ${item.parking_lot_id}`});
+                tempoptions.push({value: item.parking_lot_id, label:item.parking_lot_name});
             })
             let tempsizeoptions = [
                 {value: "small", label: "Small"},
@@ -69,7 +69,7 @@ export default class AddParkingSpot extends React.Component {
             if(filteredFloordata && filteredFloordata.length>0){
                 let tempflooroptions = [];
                 console.log(filteredFloordata);
-                filteredFloordata.map(item => tempflooroptions.push({value: item.floor_id, label: `Floor - ${item.floor_id}` }) );
+                filteredFloordata.map(item => tempflooroptions.push({value: item.floor_id, label: `Floor - ${item.floor_number}` }) );
                 this.setState({
                     floorOptions: tempflooroptions
                 })

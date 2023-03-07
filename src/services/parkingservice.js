@@ -34,3 +34,8 @@ import axios from "axios";
     let url = 'https://parkingmanagementservice.onrender.com/common/parkingManagementDetails';
     return axios.get(url);
   }
+
+  export function getUsers(){
+    let url = "https://reqres.in/api/users?page=2";
+    return axios.get(url);
+  }
